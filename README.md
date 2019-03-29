@@ -11,6 +11,7 @@ Ctrl+S  # save the soucer code to remote raspberry pi
 
 python3 ./simple_webserver.py   # Run http server
 
+
 Start Edge
 
 192.168.0.12:8000

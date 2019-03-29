@@ -1,1 +1,2 @@
-# SimplehHTTPserver
+# SimpleHTTPserver
+

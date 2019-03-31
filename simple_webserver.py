@@ -5,10 +5,14 @@ http://192.168.0.114:8000/       # Display the webpage without LED status
 http://192.168.0.114:8000/on     # Turn on the LED and display LED is On
 http://192.168.0.114:8000/off    # Turn off the LED and display LED is off
 """
+import sys
 import RPi.GPIO as GPIO          # Check it in your windows or Raspbian platform
 import os
 from http.server import BaseHTTPRequestHandler, HTTPServer      # must be run python3 -m http.server   
-
+#from SimpleHTTPServer import SimpleHTTPRequestHandler, BaseHTTPServer
+#HandlerClass = SimpleHTTPRequestHandler
+#ServerClass  = BaseHTTPServer.HTTPServer
+#Protocol     = "HTTP/1.0"
 
 class MytestHTTPServer(BaseHTTPRequestHandler):
     """ A special implementation of BaseHTTPRequestHander for reading data from
@@ -71,14 +75,22 @@ class MytestHTTPServer(BaseHTTPRequestHandler):
         self._redirect('/')      # Redirect back to the root url
 
 def run():
+    if sys.argv[1:]:
+        host_port = int(sys.argv[1])
+    else:
+        host_port = 8000         # print('starting server, port', host_port)       
     #host_name = '10.132.10.25'   # your Raspberry Pi IP address
-    host_name = ''
-    #host_name = 'localhost'      # Not working now
-    host_port = 8000             # print('starting server, port', host_port)
+    host_name = '127.0.0.1'      # same the localhost ip             
     # Server settings
     server_address = (host_name, host_port) 
-    print('running server...', server_address)
     httpd = HTTPServer(server_address, MytestHTTPServer)
+    print('running server...', server_address)
+
+    #HandlerClass.protocol_version = Protocol    # used SimpleHTTPRequestHandler
+    #httpd = ServerClass(server_address, HandlerClass) #used default server class
+    #sa = httpd.socket.getsockname()
+    #print "Serving HTTP on", sa[0], "port", sa[1], "..."
+
     httpd.serve_forever()
 
 if __name__ == '__main__': 

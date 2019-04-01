@@ -1,6 +1,6 @@
 """
 Install:
-Python3 –m http.server           #?
+Python3 –m http.server           #
 Pip install simple_http_server   #?
 
 python3 simple_webserver.py      # Run command to handle multiple GET request in the HW platform.
@@ -48,10 +48,15 @@ class MytestHTTPServer(BaseHTTPRequestHandler):
         html = '''
             <html>
             <body style="width:960px; margin: 20px auto;">
-            <h1>Welcome to my Raspberry Pi</h1>
+            <h1>Welcome to the platform setting</h1>
             <p>Current GPU temperature is {}</p>
             <form action="/" method="POST">
                 Turn LED :
+                <input type="submit" name="submit" value="On">
+                <input type="submit" name="submit" value="Off">
+            </form>
+            <form action="/" method="POST">
+                Uart On/Off :
                 <input type="submit" name="submit" value="On">
                 <input type="submit" name="submit" value="Off">
             </form>
@@ -68,8 +73,11 @@ class MytestHTTPServer(BaseHTTPRequestHandler):
         """
         content_length = int(self.headers['Content-Length'])    # Get the size of data
         post_data = self.rfile.read(content_length).decode("utf-8")   # Get the data
+        #post_data = urllib.parse.parse_qs(self.rfile.read(length).decode('utf-8'))
         post_data = post_data.split("=")[1]    # Only keep the value
-        
+
+        # You now have a dictionary of the post data
+
         # GPIO setup
         GPIO.setmode(GPIO.BCM)
         GPIO.setwarnings(False)
@@ -81,6 +89,7 @@ class MytestHTTPServer(BaseHTTPRequestHandler):
             GPIO.output(18, GPIO.LOW)
         print("LED is {}".format(post_data))
         self._redirect('/')      # Redirect back to the root url
+        #self.wfile.write("You finished it".encode("utf-8"))
 '''
         form = cgi.FieldStorage(
             fp=self.rfile, 

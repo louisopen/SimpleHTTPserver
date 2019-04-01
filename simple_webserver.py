@@ -1,13 +1,21 @@
 """
+Install:
+Python3 –m http.server           #?
+Pip install simple_http_server   #?
+
 python3 simple_webserver.py      # Run command to handle multiple GET request in the HW platform.
 example:
 http://192.168.0.114:8000/       # Display the webpage without LED status
 http://192.168.0.114:8000/on     # Turn on the LED and display LED is On
 http://192.168.0.114:8000/off    # Turn off the LED and display LED is off
+
 """
-import sys
-import RPi.GPIO as GPIO          # Check it in your windows or Raspbian platform
 import os
+import sys
+import socket
+import cgi
+import RPi.GPIO as GPIO          # Check it in your windows or Raspbian platform
+
 from http.server import BaseHTTPRequestHandler, HTTPServer      # must be run python3 -m http.server   
 #from SimpleHTTPServer import SimpleHTTPRequestHandler, BaseHTTPServer
 #HandlerClass = SimpleHTTPRequestHandler
@@ -73,6 +81,36 @@ class MytestHTTPServer(BaseHTTPRequestHandler):
             GPIO.output(18, GPIO.LOW)
         print("LED is {}".format(post_data))
         self._redirect('/')      # Redirect back to the root url
+'''
+        form = cgi.FieldStorage(
+            fp=self.rfile, 
+            headers=self.headers,
+            environ={'REQUEST_METHOD':'POST','CONTENT_TYPE':self.headers['Content-Type'],
+            }
+            )
+        self.send_response(200)        
+        self.end_headers()        
+        self.wfile.write('Client: %sn ' % str(self.client_address) )        
+        self.wfile.write('User-agent: %sn' % str(self.headers['user-agent']))        
+        self.wfile.write('Path: %sn'%self.path)        
+        self.wfile.write('Form data:n')        
+        for field in form.keys():            
+            field_item = form[field]            
+            filename = field_item.filename            
+            filevalue  = field_item.value            
+            filesize = len(filevalue)  #文件大小(字节)            
+            #print len(filevalue)	   #print (filename)            
+            with open(filename.decode('utf-8'),'wb') as f:                
+            f.write(filevalue)
+'''
+
+def getIP():
+    myname = socket.getfqdn(socket.gethostname())
+    get_s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    get_s.connect(('8.8.8.8', 0))
+    #ip = ('hostname: %s, localIP: %s') % (myname, get_s.getsockname()[0])
+    ip = ('%s') % (get_s.getsockname()[0])
+    return ip
 
 def run():
     if sys.argv[1:]:
@@ -80,7 +118,7 @@ def run():
     else:
         host_port = 8000         # print('starting server, port', host_port)       
     #host_name = '10.132.10.25'   # your Raspberry Pi IP address
-    host_name = '127.0.0.1'      # same the localhost ip             
+    host_name = getIP()          # same the localhost ip             
     # Server settings
     server_address = (host_name, host_port) 
     httpd = HTTPServer(server_address, MytestHTTPServer)

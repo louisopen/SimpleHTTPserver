@@ -19,4 +19,5 @@ Under command line of VSCode
 * 192.168.0.12:8000
 
 ### Or download from github
+git clone git@github.com:louisopen/SimpleHTTPServer.git
 git clone git@github.com:louisopen/SimpleHTTPServer/simple_webserver.py

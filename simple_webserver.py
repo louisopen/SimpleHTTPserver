@@ -17,11 +17,17 @@ import cgi
 import RPi.GPIO as GPIO          # Check it in your windows or Raspbian platform
 
 from http.server import BaseHTTPRequestHandler, HTTPServer      # must be run python3 -m http.server   
+"""
 #from SimpleHTTPServer import SimpleHTTPRequestHandler, BaseHTTPServer
 #HandlerClass = SimpleHTTPRequestHandler
 #ServerClass  = BaseHTTPServer.HTTPServer
 #Protocol     = "HTTP/1.0"
-
+"""
+"""
+import socketserver  
+class MyThreadingHTTPServer(socketserver.ThreadingMixIn, HTTPServer):  # 採用多線程執行(開啟多頁)
+    pass  
+"""
 class MytestHTTPServer(BaseHTTPRequestHandler):
     """ A special implementation of BaseHTTPRequestHander for reading data from
         and control GPIO of a Raspberry Pi
@@ -131,6 +137,8 @@ def run():
     # Server settings
     server_address = (host_name, host_port) 
     httpd = HTTPServer(server_address, MytestHTTPServer)
+    #httpd = MyThreadingHTTPServer(('',8080), MytestHTTPServer)
+    #httpd = MyThreadingHTTPServer(server_address, MytestHTTPServer)
     print('running server...', server_address)
 
     #HandlerClass.protocol_version = Protocol    # used SimpleHTTPRequestHandler

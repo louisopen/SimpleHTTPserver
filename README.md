@@ -4,6 +4,7 @@ At the same time, it used VS Code remote edition.
 
 SimpleHTTPserver.py 是一個簡單的HTTP網頁服務範例, 它是在Raspberry pi3上驗證的
 同時本範例是使用VS Code遠程編輯.
+
 ###Start VSCode
 
 Under command line of VSCode

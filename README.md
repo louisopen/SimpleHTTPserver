@@ -1,4 +1,4 @@
-## SimpleHTTPserver
+## Simple HTTP server
 SimpleHTTPserver.py is a simple HTTP service on Raspberry pi platform.
 At the same time, it used VS Code remote edition.
 

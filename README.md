@@ -6,7 +6,6 @@ SimpleHTTPserver.py 是一個簡單的HTTP網頁服務範例, 它是在Raspberry
 同時本範例是使用VS Code遠程編輯.
 
 ### Start VSCode
-
 Under command line of VSCode
 
 * SSH pi@192.168.0.12    # need your password of the pi account
@@ -17,11 +16,11 @@ Under command line of VSCode
 
 * python3 ./simple_webserver.py   # Run http server
 
+### Or download example from github
+git clone git@github.com:louisopen/SimpleHTTPServer.git
+
+git clone git@github.com:louisopen/SimpleHTTPServer/simple_webserver.py
 
 ### Start Edge on your PC or mobile phone
 
 * 192.168.0.12:8000
-
-### Or download from github
-git clone git@github.com:louisopen/SimpleHTTPServer.git
-git clone git@github.com:louisopen/SimpleHTTPServer/simple_webserver.py

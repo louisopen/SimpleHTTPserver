@@ -23,11 +23,11 @@ from http.server import BaseHTTPRequestHandler, HTTPServer      # must be run py
 #ServerClass  = BaseHTTPServer.HTTPServer
 #Protocol     = "HTTP/1.0"
 """
-"""
+'''
 import socketserver  
 class MyThreadingHTTPServer(socketserver.ThreadingMixIn, HTTPServer):  # 採用多線程執行(開啟多頁)
     pass  
-"""
+'''
 class MytestHTTPServer(BaseHTTPRequestHandler):
     """ A special implementation of BaseHTTPRequestHander for reading data from
         and control GPIO of a Raspberry Pi

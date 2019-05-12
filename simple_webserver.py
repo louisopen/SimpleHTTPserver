@@ -1,9 +1,9 @@
+#coding=utf-8
+# Install in Linux bash
+# Python3 –m http.server           #
+# sudo pip install simple_http_server   #?
 """
-Install:
-Python3 –m http.server           #
-Pip install simple_http_server   #?
-
-python3 simple_webserver.py      # Run command to handle multiple GET request in the HW platform.
+python3 ./simple_webserver.py      # Run command to handle multiple GET request in the HW platform.
 example:
 http://192.168.0.114:8000/       # Display the webpage without LED status
 http://192.168.0.114:8000/on     # Turn on the LED and display LED is On

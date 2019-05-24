@@ -1,28 +1,28 @@
+#!/usr/bin/python
 #coding=utf-8
 # Install in Linux bash
 # Python3 –m http.server           #
 # sudo pip install simple_http_server   #?
-"""
-python3 ./simple_webserver.py      # Run command to handle multiple GET request in the HW platform.
-example:
+'''
+python3 ./simple_webserver.py    # Run command to handle multiple GET request in the HW platform.
+IE examples:
 http://192.168.0.114:8000/       # Display the webpage without LED status
 http://192.168.0.114:8000/on     # Turn on the LED and display LED is On
 http://192.168.0.114:8000/off    # Turn off the LED and display LED is off
-
-"""
+'''
 import os
 import sys
 import socket
-import cgi
 import RPi.GPIO as GPIO          # Check it in your windows or Raspbian platform
-
+#import cgi                       #CGIHTTPServer CGIHTTPRequestHandler for the post
 from http.server import BaseHTTPRequestHandler, HTTPServer      # must be run python3 -m http.server   
-"""
+
+'''
 #from SimpleHTTPServer import SimpleHTTPRequestHandler, BaseHTTPServer
 #HandlerClass = SimpleHTTPRequestHandler
 #ServerClass  = BaseHTTPServer.HTTPServer
 #Protocol     = "HTTP/1.0"
-"""
+'''
 '''
 import socketserver  
 class MyThreadingHTTPServer(socketserver.ThreadingMixIn, HTTPServer):  # 採用多線程執行(開啟多頁)
@@ -54,8 +54,10 @@ class MytestHTTPServer(BaseHTTPRequestHandler):
         html = '''
             <html>
             <body style="width:960px; margin: 20px auto;">
-            <h1>Welcome to the platform setting</h1>
+            <h1>The stepping motor control panel</h1>
             <p>Current GPU temperature is {}</p>
+            <p>TEST THE LINE01234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789</p>
+            <p>The UART default setting is 9600,N,8,1</p>
             <form action="/" method="POST">
                 Turn LED :
                 <input type="submit" name="submit" value="On">
@@ -97,7 +99,7 @@ class MytestHTTPServer(BaseHTTPRequestHandler):
         self._redirect('/')      # Redirect back to the root url
         #self.wfile.write("You finished it".encode("utf-8"))
 '''
-        form = cgi.FieldStorage(
+        form = cgi.FieldStorage(        # import cgiHTTPServer
             fp=self.rfile, 
             headers=self.headers,
             environ={'REQUEST_METHOD':'POST','CONTENT_TYPE':self.headers['Content-Type'],
@@ -132,8 +134,7 @@ def run():
         host_port = int(sys.argv[1])
     else:
         host_port = 8000         # print('starting server, port', host_port)       
-    #host_name = '10.132.10.25'   # your Raspberry Pi IP address
-    host_name = getIP()          # same the localhost ip             
+    host_name = getIP()          # same the localhost ip  host_name = '192.168.0.17'         
     # Server settings
     server_address = (host_name, host_port) 
     httpd = HTTPServer(server_address, MytestHTTPServer)

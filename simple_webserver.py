@@ -62,11 +62,12 @@ class MytestHTTPServer(BaseHTTPRequestHandler):
                 Turn LED :
                 <input type="submit" name="submit" value="On">
                 <input type="submit" name="submit" value="Off">
+                <input type="submit" name="submit" value="STOP    ">
             </form>
             <form action="/" method="POST">
                 Uart On/Off :
-                <input type="submit" name="submit" value="On">
-                <input type="submit" name="submit" value="Off">
+                <input type="submit" name="submit" value="TXD">
+                <input type="submit" name="submit" value="RXD">
             </form>
             </body>
             </html>

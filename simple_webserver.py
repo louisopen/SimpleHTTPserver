@@ -29,10 +29,6 @@ class MyThreadingHTTPServer(socketserver.ThreadingMixIn, HTTPServer):  # 採用�
     pass  
 '''
 class MytestHTTPServer(BaseHTTPRequestHandler):
-    """ A special implementation of BaseHTTPRequestHander for reading data from
-        and control GPIO of a Raspberry Pi
-    """
-
     def do_HEAD(self):
         """ do_HEAD() can be tested use curl command 
             'curl -I http://server-ip-address:port' 
@@ -48,9 +44,6 @@ class MytestHTTPServer(BaseHTTPRequestHandler):
         self.end_headers()
 
     def do_GET(self):
-        """ do_GET() can be tested using curl command 
-            'curl http://server-ip-address:port' 
-        """
         html = '''
             <html>
             <body style="width:960px; margin: 20px auto;">
@@ -77,9 +70,6 @@ class MytestHTTPServer(BaseHTTPRequestHandler):
         self.wfile.write(html.format(temp[5:]).encode("utf-8"))
 
     def do_POST(self):
-        """ do_POST() can be tested using curl command 
-            'curl -d "submit=On" http://server-ip-address:port' 
-        """
         content_length = int(self.headers['Content-Length'])    # Get the size of data
         post_data = self.rfile.read(content_length).decode("utf-8")   # Get the data
         #post_data = urllib.parse.parse_qs(self.rfile.read(length).decode('utf-8'))

@@ -14,25 +14,11 @@ import os
 import sys
 import socket
 import RPi.GPIO as GPIO          # Check it in your windows or Raspbian platform
-#import cgi                       #CGIHTTPServer CGIHTTPRequestHandler for the post
 from http.server import BaseHTTPRequestHandler, HTTPServer      # must be run python3 -m http.server   
 
-'''
-#from SimpleHTTPServer import SimpleHTTPRequestHandler, BaseHTTPServer
-#HandlerClass = SimpleHTTPRequestHandler
-#ServerClass  = BaseHTTPServer.HTTPServer
-#Protocol     = "HTTP/1.0"
-'''
-'''
-import socketserver  
-class MyThreadingHTTPServer(socketserver.ThreadingMixIn, HTTPServer):  # 採用多線程執行(開啟多頁)
-    pass  
-'''
+
 class MytestHTTPServer(BaseHTTPRequestHandler):
     def do_HEAD(self):
-        """ do_HEAD() can be tested use curl command 
-            'curl -I http://server-ip-address:port' 
-        """
         self.send_response(200)
         self.send_header('Content-type', 'text/html')
         self.end_headers()
@@ -89,28 +75,6 @@ class MytestHTTPServer(BaseHTTPRequestHandler):
         print("LED is {}".format(post_data))
         self._redirect('/')      # Redirect back to the root url
         #self.wfile.write("You finished it".encode("utf-8"))
-'''
-        form = cgi.FieldStorage(        # import cgiHTTPServer
-            fp=self.rfile, 
-            headers=self.headers,
-            environ={'REQUEST_METHOD':'POST','CONTENT_TYPE':self.headers['Content-Type'],
-            }
-            )
-        self.send_response(200)        
-        self.end_headers()        
-        self.wfile.write('Client: %sn ' % str(self.client_address) )        
-        self.wfile.write('User-agent: %sn' % str(self.headers['user-agent']))        
-        self.wfile.write('Path: %sn'%self.path)        
-        self.wfile.write('Form data:n')        
-        for field in form.keys():            
-            field_item = form[field]            
-            filename = field_item.filename            
-            filevalue  = field_item.value            
-            filesize = len(filevalue)  #文件大小(字节)            
-            #print len(filevalue)	   #print (filename)            
-            with open(filename.decode('utf-8'),'wb') as f:                
-            f.write(filevalue)
-'''
 
 def getIP():
     myname = socket.getfqdn(socket.gethostname())
@@ -132,11 +96,6 @@ def run():
     #httpd = MyThreadingHTTPServer(('',8080), MytestHTTPServer)
     #httpd = MyThreadingHTTPServer(server_address, MytestHTTPServer)
     print('running server...', server_address)
-
-    #HandlerClass.protocol_version = Protocol    # used SimpleHTTPRequestHandler
-    #httpd = ServerClass(server_address, HandlerClass) #used default server class
-    #sa = httpd.socket.getsockname()
-    #print "Serving HTTP on", sa[0], "port", sa[1], "..."
 
     httpd.serve_forever()
 
